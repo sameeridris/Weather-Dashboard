@@ -77,8 +77,15 @@ Render Functions
 */
 
 const renderCurrentWeather = (currentWeather: any): void => {
-  const { city, date, icon, iconDescription, tempF, windSpeed, humidity } =
-    currentWeather;
+  // const { city, date, icon, iconDescription, tempF, windSpeed, humidity } =
+    const city = currentWeather.name;
+    const unixDate = currentWeather.dt; //fix format
+    const date = new Date(unixDate *1000);
+    const icon = currentWeather.weather[0].icon;
+    const iconDescription = currentWeather.weather[0].description;
+    const tempF = currentWeather.main.temp; 
+    const windSpeed = currentWeather.wind.speed;
+    const humidity = currentWeather.main.humidity;
 
   // convert the following to typescript
   heading.textContent = `${city} (${date})`;
@@ -118,13 +125,21 @@ const renderForecast = (forecast: any): void => {
 };
 
 const renderForecastCard = (forecast: any) => {
-  const { date, icon, iconDescription, tempF, windSpeed, humidity } = forecast;
+  console.log(forecast);
+  const unixDate = forecast.dt; //fix format
+    const date = new Date(unixDate *1000);
+    const icon = forecast.weather[0].icon;
+    const iconDescription = forecast.weather[0].description;
+    const tempF = forecast.main.temp; 
+    const windSpeed = forecast.wind.speed;
+    const humidity = forecast.main.humidity;
+  // const { date, icon, iconDescription, tempF, windSpeed, humidity } = forecast;
 
   const { col, cardTitle, weatherIcon, tempEl, windEl, humidityEl } =
     createForecastCard();
 
   // Add content to elements
-  cardTitle.textContent = date;
+  cardTitle.textContent = date.toString();
   weatherIcon.setAttribute(
     'src',
     `https://openweathermap.org/img/w/${icon}.png`
